@@ -2,7 +2,7 @@ module Lisp exposing (eval)
 
 import List.Extra
 import Maybe.Extra
-import Parse exposing (AST(..))
+import Parse exposing (AST(..), parse)
 
 
 type Value
@@ -14,9 +14,15 @@ type Value
     | ParseError
 
 
+{-|
+
+    > eval "(+ 1 2)"
+    VNum 3 : Value
+
+-}
 eval : String -> Value
 eval str =
-    case str |> Parse.toAST |> Maybe.map evalAst of
+    case str |> parse |> Maybe.map evalAst of
         Just val ->
             val
 

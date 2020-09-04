@@ -64,19 +64,22 @@ string_ =
     getChompedString
         (succeed ()
             |. chompIf (\c -> Char.isAlpha c)
-            -- |. chompIf (\c -> not (Char.isDigit c))
             |. chompWhile (\c -> c /= ' ' && c /= ')')
         )
         |> map (String.trim >> Str)
 
 
 
--- OPERATORS
+-- OPERATOR
 
 
 operator : Parser AST
 operator =
-    oneOf [ op "+", op "-", op "*", op "/", op "=", op ">", op "<" ]
+    let
+        opParsers =
+            List.map op [ "+", "-", "*", "/", "=", ">", "<" ]
+    in
+    oneOf opParsers
 
 
 op : String -> Parser AST
