@@ -1,4 +1,4 @@
-module Parse exposing (AST(..), parse, string)
+module Parse exposing (AST(..), integer, list, parse, string)
 
 {-
 
@@ -64,6 +64,7 @@ string_ =
     getChompedString
         (succeed ()
             |. chompIf (\c -> Char.isAlpha c)
+            -- |. chompIf (\c -> not (Char.isDigit c))
             |. chompWhile (\c -> c /= ' ' && c /= ')')
         )
         |> map (String.trim >> Str)
