@@ -1,4 +1,4 @@
-module Parse exposing (AST(..), toAST)
+module Parse exposing (AST(..), parse, string)
 
 {-
 
@@ -22,9 +22,9 @@ type AST
     Just (LIST [Str "*",Num 2,LIST [Str "+",Num 3,Num 4]])
 
 -}
-toAST : String -> Maybe AST
-toAST str =
-    case run parse str of
+parse : String -> Maybe AST
+parse str =
+    case run parser str of
         Ok ast ->
             Just ast
 
@@ -32,8 +32,8 @@ toAST str =
             Nothing
 
 
-parse : Parser AST
-parse =
+parser : Parser AST
+parser =
     oneOf [ lazy (\_ -> list), string, integer ]
 
 
@@ -42,7 +42,7 @@ list =
     (succeed identity
         |. symbol "("
         |. spaces
-        |= manyWithSpace parse
+        |= many parser
         |. spaces
         |. symbol ")"
         |. spaces
@@ -64,7 +64,7 @@ string_ =
     getChompedString
         (succeed ()
             |. chompIf (\c -> Char.isAlpha c)
-            |. chompWhile (\c -> c /=  ' ' && c /= ')')
+            |. chompWhile (\c -> c /= ' ' && c /= ')')
         )
         |> map (String.trim >> Str)
 
@@ -75,15 +75,16 @@ string_ =
 
 operator : Parser AST
 operator =
-    oneOf [ op "+", op "-", op "*", op "/", op "=", op ">", op "<"]
+    oneOf [ op "+", op "-", op "*", op "/", op "=", op ">", op "<" ]
 
 
 op : String -> Parser AST
 op opName =
     (succeed opName
-            |. symbol opName
-        )
-            |> map Str
+        |. symbol opName
+    )
+        |> map Str
+
 
 
 -- INTEGER
