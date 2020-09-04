@@ -19,6 +19,9 @@ type Value
     > eval "(+ 1 2)"
     VNum 3 : Value
 
+    > eval "(+ 1 a)"
+    Undefined : Value
+
 -}
 eval : String -> Value
 eval str =
