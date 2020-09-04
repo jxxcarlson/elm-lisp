@@ -10,6 +10,8 @@ a kind of typed Lisp in Elm.  The files are
 - *Lisp.elm*, exporting one function, `eval`
 - *Lisp2.elm*, a superset of *Lisp.elm*
 
+[Medium article on this code](https://medium.com/@jxxcarlson/a-typed-lisp-in-elm-e5c733f63931)
+
 Examples:
 
 ```
