@@ -169,3 +169,149 @@ evalBool f a b =
 
         _ ->
             False
+
+-- ????
+
+module Lisp exposing (eval, evalAst, getItem, unwrapList)
+
+import List.Extra
+import Maybe.Extra
+import Parse exposing (AST(..), parse)
+
+
+type Value
+    = VStr String
+    | VNum Int
+    | VList (List Value)
+    | Undefined
+    | ParseError
+
+
+{-|
+
+    > eval "(+ 1 2)"
+    VNum 3 : Value
+
+    > eval "(+ 1 a)"
+    Undefined : Value
+
+-}
+eval : String -> Value
+eval str =
+    case str |> parse |> Maybe.map evalAst of
+        Just val ->
+            val
+
+        Nothing ->
+            ParseError
+
+
+evalAst : AST -> Value
+evalAst ast =
+    case ast of
+        Num k ->
+            VNum k
+
+        Str s ->
+            VStr s
+
+        LIST list ->
+            case List.head list of
+                Just (Str "+") ->
+                    List.map (evalAst >> unWrapVNum) (List.drop 1 list)
+                        |> Maybe.Extra.combine
+                        |> Maybe.map List.sum
+                        |> wrapVNum
+
+                Just (Str "-") ->
+                    if List.length list > 3 then
+                        -- Too many args
+                        Undefined
+
+                    else if List.length list < 2 then
+                        -- No args
+                        Undefined
+
+                    else if List.length list == 2 then
+                        -- Unary minus
+                        Maybe.map (\x -> -x) (getNumArg 1 list) |> wrapVNum
+
+                    else
+                        -- Binary minus
+                        Maybe.map2 (-) (getNumArg 1 list) (getNumArg 2 list) |> wrapVNum
+
+                _ ->
+                    List.map evalAst list |> VList
+
+
+
+-- HELPERS
+-- WRAP/UNWRAP
+
+
+unWrapVNum : Value -> Maybe Int
+unWrapVNum value =
+    case value of
+        VNum k ->
+            Just k
+
+        _ ->
+            Nothing
+
+
+wrapVNum : Maybe Int -> Value
+wrapVNum maybeInt =
+    case maybeInt of
+        Nothing ->
+            Undefined
+
+        Just k ->
+            VNum k
+
+
+
+-- ARGS
+
+
+
+{-|
+
+    > ast = parse "(abc 2 3)"
+    Just (LIST [Str "abc",Num 2,Num 3])
+        : Maybe Parse.AST
+
+    > Maybe.andThen (getItem 0) ast
+    Just (Str "abc") : Maybe Parse.AST
+
+    > Maybe.andThen (getItem 1) ast
+    Just (Num 2) : Maybe Parse.AST
+
+-}
+getItem : Int -> AST -> Maybe AST
+getItem k ast =
+    case ast of
+        LIST list ->
+            List.Extra.getAt k list
+
+        _ ->
+            Nothing
+
+
+{-|
+
+    > ast = parse "(1 2 3)"
+    Just (LIST [Num 1,Num 2,Num 3])
+        : Maybe Parse.AST
+
+    > Maybe.andThen unwrapList ast
+    Just [Num 1,Num 2,Num 3]
+
+-}
+unwrapList : AST -> Maybe (List AST)
+unwrapList ast =
+    case ast of
+        LIST list ->
+            Just list
+
+        _ ->
+            Nothing
