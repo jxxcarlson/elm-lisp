@@ -45,10 +45,10 @@ evalAst ast =
         LIST list ->
             case List.head list of
                 Just (Str "+") ->
-                    List.map (evalAst >> unWrapVnum) (List.drop 1 list)
+                    List.map (evalAst >> unWrapVNum) (List.drop 1 list)
                         |> Maybe.Extra.combine
                         |> Maybe.map List.sum
-                        |> wrapVnum
+                        |> wrapVNum
 
                 Just (Str "-") ->
                     if List.length list > 3 then
@@ -61,11 +61,11 @@ evalAst ast =
 
                     else if List.length list == 2 then
                         -- Unary minus
-                        Maybe.map (\x -> -x) (getNumArg 1 list) |> wrapVnum
+                        Maybe.map (\x -> -x) (getNumArg 1 list) |> wrapVNum
 
                     else
                         -- Binary minus
-                        Maybe.map2 (-) (getNumArg 1 list) (getNumArg 2 list) |> wrapVnum
+                        Maybe.map2 (-) (getNumArg 1 list) (getNumArg 2 list) |> wrapVNum
 
                 _ ->
                     List.map evalAst list |> VList
@@ -76,8 +76,8 @@ evalAst ast =
 -- WRAP/UNWRAP
 
 
-unWrapVnum : Value -> Maybe Int
-unWrapVnum value =
+unWrapVNum : Value -> Maybe Int
+unWrapVNum value =
     case value of
         VNum k ->
             Just k
@@ -86,8 +86,8 @@ unWrapVnum value =
             Nothing
 
 
-wrapVnum : Maybe Int -> Value
-wrapVnum maybeInt =
+wrapVNum : Maybe Int -> Value
+wrapVNum maybeInt =
     case maybeInt of
         Nothing ->
             Undefined
@@ -102,4 +102,4 @@ wrapVnum maybeInt =
 
 getNumArg : Int -> List AST -> Maybe Int
 getNumArg k list =
-    List.Extra.getAt k list |> Maybe.map evalAst |> Maybe.andThen unWrapVnum
+    List.Extra.getAt k list |> Maybe.map evalAst |> Maybe.andThen unWrapVNum
