@@ -1,4 +1,4 @@
-module ParserHelpers exposing (..)
+module ParserHelpers exposing (many)
 
 import Parser exposing (..)
 
