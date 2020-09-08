@@ -12,6 +12,8 @@ a kind of typed Lisp in Elm.  The files are
 
 [Medium article on this code](https://medium.com/@jxxcarlson/a-typed-lisp-in-elm-e5c733f63931)
 
+At present, things are set up to evaluate Lisp expressions with a repl. See notes at end.
+
 Examples:
 
 ```
@@ -32,3 +34,12 @@ Just Undefined : Maybe Lisp2.Value
 ```
 
 Note that `eval` handles nonsense input in a somewhat graceful way.
+
+## The repl
+
+To use the repl:
+
+```
+$ elm make --optimize src/Repl/Main.elm --output=src/Repl/main.js
+$ node src/Repl/repl.js
+```

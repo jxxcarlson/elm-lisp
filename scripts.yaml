@@ -1,0 +1,12 @@
+scripts:
+
+  make: elm make src/Lisp2.elm
+
+  make-repl: elm make --optimize src/Repl/Main.elm --output=src/Repl/main.js
+
+  repl:
+    - node src/Repl/repl.js
+
+  remove-unused:
+    desc: use elm-review cli to remove unused code
+    cmd: npx elm-review --template jfmengels/review-unused/example --fix-all

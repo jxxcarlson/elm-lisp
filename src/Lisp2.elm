@@ -1,4 +1,4 @@
-module Lisp2 exposing (eval)
+module Lisp2 exposing (eval, evalToString)
 
 import List.Extra
 import Maybe.Extra
@@ -16,6 +16,42 @@ type Value
 eval : String -> Maybe Value
 eval str =
     str |> parse |> Maybe.map evalAst
+
+
+evalToString : String -> String
+evalToString str =
+    eval str
+        |> Maybe.map toString
+        |> Maybe.withDefault "Undefined"
+
+
+toString : Value -> String
+toString value =
+    case value of
+        VStr s ->
+            s
+
+        VNum n ->
+            String.fromInt n
+
+        VBool b ->
+            boolToString b
+
+        VList l ->
+            List.map toString l |> String.join " "
+
+        Undefined ->
+            "Undefined"
+
+
+boolToString : Bool -> String
+boolToString b =
+    case b of
+        True ->
+            "True"
+
+        False ->
+            "False"
 
 
 evalAst : AST -> Value
@@ -79,6 +115,13 @@ evalAst ast =
 
                         Just k ->
                             List.Extra.getAt k (List.drop 2 list) |> Maybe.map evalAst |> extract
+
+                Just (Str "square") ->
+                    if List.length list == 2 then
+                        Maybe.map (\x -> x * x) (getNumArg 1 list) |> wrapVNum
+
+                    else
+                        Undefined
 
                 _ ->
                     List.map evalAst list |> VList
@@ -170,108 +213,9 @@ evalBool f a b =
         _ ->
             False
 
+
+
 -- ????
-
-module Lisp exposing (eval, evalAst, getItem, unwrapList)
-
-import List.Extra
-import Maybe.Extra
-import Parse exposing (AST(..), parse)
-
-
-type Value
-    = VStr String
-    | VNum Int
-    | VList (List Value)
-    | Undefined
-    | ParseError
-
-
-{-|
-
-    > eval "(+ 1 2)"
-    VNum 3 : Value
-
-    > eval "(+ 1 a)"
-    Undefined : Value
-
--}
-eval : String -> Value
-eval str =
-    case str |> parse |> Maybe.map evalAst of
-        Just val ->
-            val
-
-        Nothing ->
-            ParseError
-
-
-evalAst : AST -> Value
-evalAst ast =
-    case ast of
-        Num k ->
-            VNum k
-
-        Str s ->
-            VStr s
-
-        LIST list ->
-            case List.head list of
-                Just (Str "+") ->
-                    List.map (evalAst >> unWrapVNum) (List.drop 1 list)
-                        |> Maybe.Extra.combine
-                        |> Maybe.map List.sum
-                        |> wrapVNum
-
-                Just (Str "-") ->
-                    if List.length list > 3 then
-                        -- Too many args
-                        Undefined
-
-                    else if List.length list < 2 then
-                        -- No args
-                        Undefined
-
-                    else if List.length list == 2 then
-                        -- Unary minus
-                        Maybe.map (\x -> -x) (getNumArg 1 list) |> wrapVNum
-
-                    else
-                        -- Binary minus
-                        Maybe.map2 (-) (getNumArg 1 list) (getNumArg 2 list) |> wrapVNum
-
-                _ ->
-                    List.map evalAst list |> VList
-
-
-
--- HELPERS
--- WRAP/UNWRAP
-
-
-unWrapVNum : Value -> Maybe Int
-unWrapVNum value =
-    case value of
-        VNum k ->
-            Just k
-
-        _ ->
-            Nothing
-
-
-wrapVNum : Maybe Int -> Value
-wrapVNum maybeInt =
-    case maybeInt of
-        Nothing ->
-            Undefined
-
-        Just k ->
-            VNum k
-
-
-
--- ARGS
-
 
 
 {-|
