@@ -53,6 +53,6 @@ Type ':help' for help
 3
 ```
 
-This repl program uses the code in `./src/Repl` following the outline
-described in the Medium article [Elm as BlackBox](https://medium.com/@jxxcarlson/running-elm-as-a-blackbox-b1930592054b).  One uses the `Platform.Worker` program in `Repl.Main` to communicate with the
+The repl program uses the code in `./src/Repl` following the outline
+described in the Medium article [Elm as BlackBox](https://medium.com/@jxxcarlson/running-elm-as-a-blackbox-b1930592054b).  The idea is to use the `Platform.Worker` program in `Repl.Main` to communicate with the
 terminal via `node.js`.
