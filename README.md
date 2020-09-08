@@ -1,7 +1,8 @@
 # A Typed Lisp in Elm
 
 The code you find here outlines how one might go about writing
-a kind of typed Lisp in Elm.  The files are
+a kind of typed Lisp in Elm — an educational experiment for myself.
+The files are
 
 - *Parse.elm*, exporting one type, `AST`, and one function `parse`.
 - *ParserHelpers.elm*, exporting one function, `many`, a clip from
