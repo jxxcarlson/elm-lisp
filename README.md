@@ -13,7 +13,10 @@ The files are
 
 [Medium article on this code](https://medium.com/@jxxcarlson/a-typed-lisp-in-elm-e5c733f63931)
 
-At present, things are set up to evaluate Lisp expressions with a repl. See notes at end.
+One can evaluate Lisp expressions using `elm-repl` or by using the little node repl program  
+described in the last section.
+
+## Using elm-repl  
 
 Examples:
 
@@ -44,3 +47,7 @@ To use the repl:
 $ elm make --optimize src/Repl/Main.elm --output=src/Repl/main.js
 $ node src/Repl/repl.js
 ```
+
+This repl program uses the code in `./src/Repl` following the outline
+described in the Medium article [Elm as BlackBox](https://medium.com/@jxxcarlson/running-elm-as-a-blackbox-b1930592054b).  One uses the `Platform.Worker` program in `Repl.Main` to communicate with the
+terminal via `node.js`.
