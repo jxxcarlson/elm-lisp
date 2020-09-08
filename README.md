@@ -46,6 +46,11 @@ To use the repl:
 ```
 $ elm make --optimize src/Repl/Main.elm --output=src/Repl/main.js
 $ node src/Repl/repl.js
+
+Type ':help' for help
+
+> (+ 1 2)
+3
 ```
 
 This repl program uses the code in `./src/Repl` following the outline
