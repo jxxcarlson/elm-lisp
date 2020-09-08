@@ -600,11 +600,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.O.E === region.V.E)
+	if (region.N.D === region.U.D)
 	{
-		return 'on line ' + region.O.E;
+		return 'on line ' + region.N.D;
 	}
-	return 'on lines ' + region.O.E + ' through ' + region.V.E;
+	return 'on lines ' + region.N.D + ' through ' + region.U.D;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aP,
-		impl.aY,
-		impl.aW,
+		impl.aO,
+		impl.aX,
+		impl.aV,
 		function() { return function() {} }
 	);
 });
@@ -2486,7 +2486,6 @@ var _Parser_findSubString = F5(function(smallString, offset, row, col, bigString
 
 	return _Utils_Tuple3(newOffset, row, col);
 });
-var $elm$core$Maybe$Nothing = {$: 1};
 var $elm$core$Basics$apR = F2(
 	function (x, f) {
 		return f(x);
@@ -2597,6 +2596,7 @@ var $elm$core$Basics$add = _Basics_add;
 var $elm$core$Maybe$Just = function (a) {
 	return {$: 0, a: a};
 };
+var $elm$core$Maybe$Nothing = {$: 1};
 var $elm$core$String$all = _String_all;
 var $elm$core$Basics$and = _Basics_and;
 var $elm$core$Basics$append = _Utils_append;
@@ -2968,38 +2968,18 @@ var $Janiczek$cmd_extra$Cmd$Extra$withNoCmd = function (model) {
 };
 var $author$project$Repl$Main$init = function (_v0) {
 	return $Janiczek$cmd_extra$Cmd$Extra$withNoCmd(
-		{s: $elm$core$Maybe$Nothing, F: ''});
+		{L: ''});
 };
-var $author$project$Repl$Main$Input = function (a) {
-	return {$: 0, a: a};
+var $elm$core$Basics$identity = function (x) {
+	return x;
 };
-var $author$project$Repl$Main$ReceivedDataFromJS = function (a) {
-	return {$: 1, a: a};
-};
-var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $author$project$Repl$Main$Input = $elm$core$Basics$identity;
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Repl$Main$get = _Platform_incomingPort('get', $elm$json$Json$Decode$string);
-var $elm$json$Json$Decode$value = _Json_decodeValue;
-var $author$project$Repl$Main$receiveData = _Platform_incomingPort('receiveData', $elm$json$Json$Decode$value);
 var $author$project$Repl$Main$subscriptions = function (_v0) {
-	return $elm$core$Platform$Sub$batch(
-		_List_fromArray(
-			[
-				$author$project$Repl$Main$get($author$project$Repl$Main$Input),
-				$author$project$Repl$Main$receiveData($author$project$Repl$Main$ReceivedDataFromJS)
-			]));
+	return $author$project$Repl$Main$get($elm$core$Basics$identity);
 };
 var $elm$json$Json$Decode$succeed = _Json_succeed;
-var $elm$json$Json$Decode$decodeValue = _Json_run;
-var $author$project$Repl$Main$decodeFileContents = function (value) {
-	var _v0 = A2($elm$json$Json$Decode$decodeValue, $elm$json$Json$Decode$string, value);
-	if (!_v0.$) {
-		var str = _v0.a;
-		return $elm$core$Maybe$Just(str);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
 var $elm$core$List$drop = F2(
 	function (n, list) {
 		drop:
@@ -3114,187 +3094,7 @@ var $elm_community$list_extra$List$Extra$getAt = F2(
 		return (idx < 0) ? $elm$core$Maybe$Nothing : $elm$core$List$head(
 			A2($elm$core$List$drop, idx, xs));
 	});
-var $elm$core$String$lines = _String_lines;
-var $elm$core$List$takeReverse = F3(
-	function (n, list, kept) {
-		takeReverse:
-		while (true) {
-			if (n <= 0) {
-				return kept;
-			} else {
-				if (!list.b) {
-					return kept;
-				} else {
-					var x = list.a;
-					var xs = list.b;
-					var $temp$n = n - 1,
-						$temp$list = xs,
-						$temp$kept = A2($elm$core$List$cons, x, kept);
-					n = $temp$n;
-					list = $temp$list;
-					kept = $temp$kept;
-					continue takeReverse;
-				}
-			}
-		}
-	});
-var $elm$core$List$takeTailRec = F2(
-	function (n, list) {
-		return $elm$core$List$reverse(
-			A3($elm$core$List$takeReverse, n, list, _List_Nil));
-	});
-var $elm$core$List$takeFast = F3(
-	function (ctr, n, list) {
-		if (n <= 0) {
-			return _List_Nil;
-		} else {
-			var _v0 = _Utils_Tuple2(n, list);
-			_v0$1:
-			while (true) {
-				_v0$5:
-				while (true) {
-					if (!_v0.b.b) {
-						return list;
-					} else {
-						if (_v0.b.b.b) {
-							switch (_v0.a) {
-								case 1:
-									break _v0$1;
-								case 2:
-									var _v2 = _v0.b;
-									var x = _v2.a;
-									var _v3 = _v2.b;
-									var y = _v3.a;
-									return _List_fromArray(
-										[x, y]);
-								case 3:
-									if (_v0.b.b.b.b) {
-										var _v4 = _v0.b;
-										var x = _v4.a;
-										var _v5 = _v4.b;
-										var y = _v5.a;
-										var _v6 = _v5.b;
-										var z = _v6.a;
-										return _List_fromArray(
-											[x, y, z]);
-									} else {
-										break _v0$5;
-									}
-								default:
-									if (_v0.b.b.b.b && _v0.b.b.b.b.b) {
-										var _v7 = _v0.b;
-										var x = _v7.a;
-										var _v8 = _v7.b;
-										var y = _v8.a;
-										var _v9 = _v8.b;
-										var z = _v9.a;
-										var _v10 = _v9.b;
-										var w = _v10.a;
-										var tl = _v10.b;
-										return (ctr > 1000) ? A2(
-											$elm$core$List$cons,
-											x,
-											A2(
-												$elm$core$List$cons,
-												y,
-												A2(
-													$elm$core$List$cons,
-													z,
-													A2(
-														$elm$core$List$cons,
-														w,
-														A2($elm$core$List$takeTailRec, n - 4, tl))))) : A2(
-											$elm$core$List$cons,
-											x,
-											A2(
-												$elm$core$List$cons,
-												y,
-												A2(
-													$elm$core$List$cons,
-													z,
-													A2(
-														$elm$core$List$cons,
-														w,
-														A3($elm$core$List$takeFast, ctr + 1, n - 4, tl)))));
-									} else {
-										break _v0$5;
-									}
-							}
-						} else {
-							if (_v0.a === 1) {
-								break _v0$1;
-							} else {
-								break _v0$5;
-							}
-						}
-					}
-				}
-				return list;
-			}
-			var _v1 = _v0.b;
-			var x = _v1.a;
-			return _List_fromArray(
-				[x]);
-		}
-	});
-var $elm$core$List$take = F2(
-	function (n, list) {
-		return A3($elm$core$List$takeFast, 0, n, list);
-	});
-var $author$project$Repl$Main$head = F2(
-	function (k, input) {
-		return A2(
-			$elm$core$String$join,
-			'\n',
-			A2(
-				$elm$core$List$take,
-				k,
-				$elm$core$String$lines(input)));
-	});
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (!maybe.$) {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (!maybe.$) {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var $author$project$Repl$Main$headOfFile = function (model) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		'no file loaded',
-		A2(
-			$elm$core$Maybe$map,
-			$author$project$Repl$Main$head(5),
-			model.s));
-};
 var $author$project$Repl$Lisp$helpText = 'Commands:\n\n    Just type an expression, e.g,\n\n        (+ 1 2)\n\n    to have it evaluated.\n';
-var $elm$core$Basics$identity = function (x) {
-	return x;
-};
-var $author$project$Repl$Main$sendFileName = _Platform_outgoingPort('sendFileName', $elm$core$Basics$identity);
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Repl$Main$loadFileCmd = function (filePath) {
-	return $author$project$Repl$Main$sendFileName(
-		$elm$json$Json$Encode$string(filePath));
-};
-var $author$project$Repl$Main$loadFile = F2(
-	function (model, fileName) {
-		return _Utils_Tuple2(
-			model,
-			$author$project$Repl$Main$loadFileCmd(fileName));
-	});
 var $elm$core$List$map = F2(
 	function (f, xs) {
 		return A3(
@@ -3309,12 +3109,14 @@ var $elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Repl$Main$put = _Platform_outgoingPort('put', $elm$json$Json$Encode$string);
 var $elm$core$String$slice = _String_slice;
 var $elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3($elm$core$String$slice, 0, n, string);
 	});
+var $elm$core$String$lines = _String_lines;
 var $elm$core$String$trim = _String_trim;
 var $author$project$Repl$Main$removeComments = function (input) {
 	return $elm$core$String$trim(
@@ -3327,24 +3129,6 @@ var $author$project$Repl$Main$removeComments = function (input) {
 					return A2($elm$core$String$left, 1, line) !== '#';
 				},
 				$elm$core$String$lines(input))));
-};
-var $author$project$Repl$Main$tail = F2(
-	function (k, input) {
-		var lines = $elm$core$String$lines(input);
-		var n = $elm$core$List$length(lines);
-		return A2(
-			$elm$core$String$join,
-			'\n',
-			A2($elm$core$List$drop, (n - k) - 1, lines));
-	});
-var $author$project$Repl$Main$tailOfFile = function (model) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		'no file loaded',
-		A2(
-			$elm$core$Maybe$map,
-			$author$project$Repl$Main$tail(5),
-			model.s));
 };
 var $author$project$Lisp2$Undefined = {$: 4};
 var $author$project$Lisp2$VList = function (a) {
@@ -3397,6 +3181,16 @@ var $author$project$Lisp2$extract = function (maybeValue) {
 		return val;
 	}
 };
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
@@ -3631,7 +3425,7 @@ var $elm$parser$Parser$Advanced$consumeBase = _Parser_consumeBase;
 var $elm$parser$Parser$Advanced$consumeBase16 = _Parser_consumeBase16;
 var $elm$parser$Parser$Advanced$bumpOffset = F2(
 	function (newOffset, s) {
-		return {T: s.T + (newOffset - s.b), c: s.c, d: s.d, b: newOffset, at: s.at, a: s.a};
+		return {S: s.S + (newOffset - s.b), c: s.c, d: s.d, b: newOffset, as: s.as, a: s.a};
 	});
 var $elm$parser$Parser$Advanced$chompBase10 = _Parser_chompBase10;
 var $elm$parser$Parser$Advanced$isAsciiCode = _Parser_isAsciiCode;
@@ -3659,7 +3453,7 @@ var $elm$parser$Parser$Advanced$AddRight = F2(
 	});
 var $elm$parser$Parser$Advanced$DeadEnd = F4(
 	function (row, col, problem, contextStack) {
-		return {T: col, aJ: contextStack, al: problem, at: row};
+		return {S: col, aI: contextStack, ak: problem, as: row};
 	});
 var $elm$parser$Parser$Advanced$Empty = {$: 0};
 var $elm$parser$Parser$Advanced$fromState = F2(
@@ -3667,7 +3461,7 @@ var $elm$parser$Parser$Advanced$fromState = F2(
 		return A2(
 			$elm$parser$Parser$Advanced$AddRight,
 			$elm$parser$Parser$Advanced$Empty,
-			A4($elm$parser$Parser$Advanced$DeadEnd, s.at, s.T, x, s.c));
+			A4($elm$parser$Parser$Advanced$DeadEnd, s.as, s.S, x, s.c));
 	});
 var $elm$parser$Parser$Advanced$finalizeInt = F5(
 	function (invalid, handler, startOffset, _v0, s) {
@@ -3707,7 +3501,7 @@ var $elm$parser$Parser$Advanced$finalizeFloat = F6(
 			return A2(
 				$elm$parser$Parser$Advanced$Bad,
 				true,
-				A4($elm$parser$Parser$Advanced$fromInfo, s.at, s.T - (floatOffset + s.b), invalid, s.c));
+				A4($elm$parser$Parser$Advanced$fromInfo, s.as, s.S - (floatOffset + s.b), invalid, s.c));
 		} else {
 			if (_Utils_eq(s.b, floatOffset)) {
 				return A2(
@@ -3753,37 +3547,37 @@ var $elm$parser$Parser$Advanced$number = function (c) {
 			var baseOffset = zeroOffset + 1;
 			return A3($elm$parser$Parser$Advanced$isAsciiCode, 120, zeroOffset, s.a) ? A5(
 				$elm$parser$Parser$Advanced$finalizeInt,
-				c.aQ,
-				c.aa,
+				c.aP,
+				c._,
 				baseOffset,
 				A2($elm$parser$Parser$Advanced$consumeBase16, baseOffset, s.a),
 				s) : (A3($elm$parser$Parser$Advanced$isAsciiCode, 111, zeroOffset, s.a) ? A5(
 				$elm$parser$Parser$Advanced$finalizeInt,
-				c.aQ,
-				c.ah,
+				c.aP,
+				c.ag,
 				baseOffset,
 				A3($elm$parser$Parser$Advanced$consumeBase, 8, baseOffset, s.a),
 				s) : (A3($elm$parser$Parser$Advanced$isAsciiCode, 98, zeroOffset, s.a) ? A5(
 				$elm$parser$Parser$Advanced$finalizeInt,
-				c.aQ,
-				c.R,
+				c.aP,
+				c.Q,
 				baseOffset,
 				A3($elm$parser$Parser$Advanced$consumeBase, 2, baseOffset, s.a),
 				s) : A6(
 				$elm$parser$Parser$Advanced$finalizeFloat,
-				c.aQ,
+				c.aP,
+				c.W,
+				c.ac,
 				c.X,
-				c.ad,
-				c.Y,
 				_Utils_Tuple2(zeroOffset, 0),
 				s)));
 		} else {
 			return A6(
 				$elm$parser$Parser$Advanced$finalizeFloat,
-				c.aQ,
+				c.aP,
+				c.W,
+				c.ac,
 				c.X,
-				c.ad,
-				c.Y,
 				A3($elm$parser$Parser$Advanced$consumeBase, 10, s.b, s.a),
 				s);
 		}
@@ -3793,13 +3587,13 @@ var $elm$parser$Parser$Advanced$int = F2(
 	function (expecting, invalid) {
 		return $elm$parser$Parser$Advanced$number(
 			{
-				R: $elm$core$Result$Err(invalid),
-				X: expecting,
-				Y: $elm$core$Result$Err(invalid),
-				aa: $elm$core$Result$Err(invalid),
-				ad: $elm$core$Result$Ok($elm$core$Basics$identity),
-				aQ: invalid,
-				ah: $elm$core$Result$Err(invalid)
+				Q: $elm$core$Result$Err(invalid),
+				W: expecting,
+				X: $elm$core$Result$Err(invalid),
+				_: $elm$core$Result$Err(invalid),
+				ac: $elm$core$Result$Ok($elm$core$Basics$identity),
+				aP: invalid,
+				ag: $elm$core$Result$Err(invalid)
 			});
 	});
 var $elm$parser$Parser$int = A2($elm$parser$Parser$Advanced$int, $elm$parser$Parser$ExpectingInt, $elm$parser$Parser$ExpectingInt);
@@ -3976,7 +3770,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 					$elm$parser$Parser$Advanced$Good,
 					_Utils_cmp(s0.b, offset) < 0,
 					0,
-					{T: col, c: s0.c, d: s0.d, b: offset, at: row, a: s0.a});
+					{S: col, c: s0.c, d: s0.d, b: offset, as: row, a: s0.a});
 			} else {
 				if (_Utils_eq(newOffset, -2)) {
 					var $temp$isGood = isGood,
@@ -4008,7 +3802,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	});
 var $elm$parser$Parser$Advanced$chompWhile = function (isGood) {
 	return function (s) {
-		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.b, s.at, s.T, s);
+		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.b, s.as, s.S, s);
 	};
 };
 var $elm$parser$Parser$Advanced$spaces = $elm$parser$Parser$Advanced$chompWhile(
@@ -4064,7 +3858,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 	var expecting = _v0.b;
 	var progress = !$elm$core$String$isEmpty(str);
 	return function (s) {
-		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.at, s.T, s.a);
+		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.as, s.S, s.a);
 		var newOffset = _v1.a;
 		var newRow = _v1.b;
 		var newCol = _v1.c;
@@ -4075,7 +3869,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 			$elm$parser$Parser$Advanced$Good,
 			progress,
 			0,
-			{T: newCol, c: s.c, d: s.d, b: newOffset, at: newRow, a: s.a});
+			{S: newCol, c: s.c, d: s.d, b: newOffset, as: newRow, a: s.a});
 	};
 };
 var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
@@ -4115,11 +3909,11 @@ var $elm$parser$Parser$Advanced$chompIf = F2(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{T: 1, c: s.c, d: s.d, b: s.b + 1, at: s.at + 1, a: s.a}) : A3(
+				{S: 1, c: s.c, d: s.d, b: s.b + 1, as: s.as + 1, a: s.a}) : A3(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{T: s.T + 1, c: s.c, d: s.d, b: newOffset, at: s.at, a: s.a}));
+				{S: s.S + 1, c: s.c, d: s.d, b: newOffset, as: s.as, a: s.a}));
 		};
 	});
 var $elm$parser$Parser$chompIf = function (isGood) {
@@ -4221,10 +4015,10 @@ $author$project$Parse$cyclic$parser = function () {
 };
 var $elm$parser$Parser$DeadEnd = F3(
 	function (row, col, problem) {
-		return {T: col, al: problem, at: row};
+		return {S: col, ak: problem, as: row};
 	});
 var $elm$parser$Parser$problemToDeadEnd = function (p) {
-	return A3($elm$parser$Parser$DeadEnd, p.at, p.T, p.al);
+	return A3($elm$parser$Parser$DeadEnd, p.as, p.S, p.ak);
 };
 var $elm$parser$Parser$Advanced$bagToList = F2(
 	function (bag, list) {
@@ -4256,7 +4050,7 @@ var $elm$parser$Parser$Advanced$run = F2(
 	function (_v0, src) {
 		var parse = _v0;
 		var _v1 = parse(
-			{T: 1, c: _List_Nil, d: 1, b: 0, at: 1, a: src});
+			{S: 1, c: _List_Nil, d: 1, b: 0, as: 1, a: src});
 		if (!_v1.$) {
 			var value = _v1.b;
 			return $elm$core$Result$Ok(value);
@@ -4321,6 +4115,15 @@ var $author$project$Lisp2$toString = function (value) {
 			return 'Undefined';
 	}
 };
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
 var $author$project$Lisp2$evalToString = function (str) {
 	return A2(
 		$elm$core$Maybe$withDefault,
@@ -4354,134 +4157,39 @@ var $author$project$Repl$Main$processCommand = F2(
 			$elm$core$Maybe$withDefault,
 			'',
 			A2($elm_community$list_extra$List$Extra$getAt, 1, args));
-		_v0$6:
-		while (true) {
-			if (!cmd.$) {
-				switch (cmd.a) {
-					case ':help':
-						return A2(
-							$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-							$author$project$Repl$Main$put($author$project$Repl$Lisp$helpText),
-							model);
-					case ':get':
-						return A2($author$project$Repl$Main$loadFile, model, arg);
-					case ':show':
-						return A2(
-							$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-							$author$project$Repl$Main$put(
-								A2($elm$core$Maybe$withDefault, 'no file loaded', model.s)),
-							model);
-					case ':head':
-						return A2(
-							$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-							$author$project$Repl$Main$put(
-								$author$project$Repl$Main$headOfFile(model)),
-							model);
-					case ':tail':
-						return A2(
-							$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-							$author$project$Repl$Main$put(
-								$author$project$Repl$Main$tailOfFile(model)),
-							model);
-					case ':calc':
-						var _v1 = model.s;
-						if (_v1.$ === 1) {
-							return A2(
-								$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-								$author$project$Repl$Main$put(
-									A2($elm$core$Maybe$withDefault, 'no file loaded', model.s)),
-								model);
-						} else {
-							var str = _v1.a;
-							var residualArgs = function () {
-								var _v2 = _Utils_eq(
-									args,
-									_List_fromArray(
-										[':calc']));
-								if (_v2) {
-									return '';
-								} else {
-									return function (x) {
-										return ':' + (x + '\n');
-									}(
-										A2(
-											$elm$core$String$join,
-											' ',
-											A2($elm$core$List$drop, 1, args)));
-								}
-							}();
-							return A2(
-								$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-								$author$project$Repl$Main$put(
-									$author$project$Repl$Lisp$transform(
-										_Utils_ap(
-											residualArgs,
-											$author$project$Repl$Main$removeComments(str)))),
-								model);
-						}
-					default:
-						break _v0$6;
-				}
-			} else {
-				break _v0$6;
-			}
+		if ((!cmd.$) && (cmd.a === ':help')) {
+			return A2(
+				$Janiczek$cmd_extra$Cmd$Extra$withCmd,
+				$author$project$Repl$Main$put($author$project$Repl$Lisp$helpText),
+				model);
+		} else {
+			return A2(
+				$Janiczek$cmd_extra$Cmd$Extra$withCmd,
+				$author$project$Repl$Main$put(
+					$author$project$Repl$Lisp$transform(
+						$author$project$Repl$Main$removeComments(cmdString))),
+				model);
 		}
-		return A2(
-			$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-			$author$project$Repl$Main$put(
-				$author$project$Repl$Lisp$transform(
-					$author$project$Repl$Main$removeComments(cmdString))),
-			model);
 	});
 var $author$project$Repl$Main$update = F2(
 	function (msg, model) {
-		if (!msg.$) {
-			var input = msg.a;
-			var _v1 = input === '';
-			if (_v1) {
-				return $Janiczek$cmd_extra$Cmd$Extra$withNoCmd(model);
-			} else {
-				return A2(
-					$author$project$Repl$Main$processCommand,
-					_Utils_update(
-						model,
-						{
-							F: $author$project$Repl$Main$getResidualCmd(input)
-						}),
-					input);
-			}
+		var input = msg;
+		var _v1 = input === '';
+		if (_v1) {
+			return $Janiczek$cmd_extra$Cmd$Extra$withNoCmd(model);
 		} else {
-			var value = msg.a;
-			var _v2 = $author$project$Repl$Main$decodeFileContents(value);
-			if (_v2.$ === 1) {
-				return A2(
-					$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-					$author$project$Repl$Main$put('Couldn\'t load file'),
-					model);
-			} else {
-				var data = _v2.a;
-				var input = function () {
-					var _v3 = model.F === '';
-					if (_v3) {
-						return $author$project$Repl$Main$removeComments(data);
-					} else {
-						return ':' + (model.F + (' ' + $author$project$Repl$Main$removeComments(data)));
-					}
-				}();
-				return A2(
-					$Janiczek$cmd_extra$Cmd$Extra$withCmd,
-					$author$project$Repl$Main$put(
-						$author$project$Repl$Lisp$transform(input)),
-					_Utils_update(
-						model,
-						{
-							s: $elm$core$Maybe$Just(data)
-						}));
-			}
+			return A2(
+				$author$project$Repl$Main$processCommand,
+				_Utils_update(
+					model,
+					{
+						L: $author$project$Repl$Main$getResidualCmd(input)
+					}),
+				input);
 		}
 	});
 var $elm$core$Platform$worker = _Platform_worker;
 var $author$project$Repl$Main$main = $elm$core$Platform$worker(
-	{aP: $author$project$Repl$Main$init, aW: $author$project$Repl$Main$subscriptions, aY: $author$project$Repl$Main$update});
+	{aO: $author$project$Repl$Main$init, aV: $author$project$Repl$Main$subscriptions, aX: $author$project$Repl$Main$update});
 _Platform_export({'Repl':{'Main':{'init':$author$project$Repl$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}}});}(this));

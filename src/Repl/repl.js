@@ -20,19 +20,6 @@ function eval(input, _, __, callback) {
   main.ports.get.send(input)
 }
 
-main.ports.sendFileName.subscribe(function(data) {
-  var path =  data
-  // console.log(path)
-  fs.readFile(path, { encoding: 'utf8' }, (err, data) => {
-    if (err) {
-      console.error(err)
-      return
-    }
-    main.ports.receiveData.send(data.toString());
-  })
-});
-
-
 function myWriter(output) {
   return output
 }
